@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("OysterCard simulation!!!!!\n")
+	fmt.Printf("OysterCard simulation!!!!!\n\n")
 
 	card := NewCard()
 	log(card, "Fresh new card")
@@ -15,6 +15,5 @@ func main() {
 
 func log(card Card, action string) {
 	fmt.Println("Action:", action)
-	fmt.Println("Balance:", card.Balance())
-	fmt.Println()
+	fmt.Printf("Balance: £%.2f\n\n", float64(card.Balance())*0.01)
 }
