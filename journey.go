@@ -20,6 +20,49 @@ func (j *Journey) Fare() int {
 		return 180
 	}
 
+	// until we know the exit, we charge the max: 320
+	if j.exit == Unknown {
+		return 320
+	}
+
+	zoneDiff := 2 // max is 3 zones
+
+	for _, z1 := range j.entry.zones {
+		for _, z2 := range j.exit.zones {
+			diff := z2 - z1
+			if diff < 0 {
+				diff = -diff
+			}
+			if diff < zoneDiff {
+				zoneDiff = diff
+			}
+		}
+	}
+
+	isZone1 := false
+
+	if len(j.entry.zones) == 1 && j.entry.zones[0] == 1 {
+		isZone1 = true
+	}
+
+	if len(j.exit.zones) == 1 && j.exit.zones[0] == 1 {
+		isZone1 = true
+	}
+
+	if zoneDiff == 0 {
+		if isZone1 {
+			return 250
+		}
+		return 200
+	}
+
+	if zoneDiff == 1 {
+		if isZone1 {
+			return 300
+		}
+		return 225
+	}
+
 	return 320
 }
 
