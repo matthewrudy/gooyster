@@ -1,7 +1,8 @@
 package main
 
 type Card struct {
-	transactions []Transaction
+	transactions   []Transaction
+	currentJourney Journey
 }
 
 type Transaction struct {
@@ -18,6 +19,19 @@ func (c *Card) Credit(amount int) {
 
 func (c *Card) Debit(amount int) {
 	c.transactions = append(c.transactions, Transaction{-amount})
+}
+
+func (c *Card) Enter(transport Transport, station *Station) {
+	c.currentJourney = NewJourney(transport, station)
+	c.transactions = append(c.transactions, Transaction{-c.currentJourney.Fare()})
+}
+
+func (c *Card) Exit(transport Transport, station *Station) {
+	// TODO: handle unexpected state
+	journey := c.currentJourney
+	journey.Complete(station)
+	activeTransaction := &c.transactions[len(c.transactions)-1]
+	activeTransaction.amount = -journey.Fare()
 }
 
 func (c *Card) Balance() int {

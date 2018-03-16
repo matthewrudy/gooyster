@@ -108,3 +108,9 @@ var Hammersmith = &Station{
 	name:  "Hammersmith",
 	zones: []int{2},
 }
+
+// TODO: differentiate tube and bus stations
+var Chelsea = &Station{
+	name:  "Chelsea",
+	zones: []int{1, 2},
+}
