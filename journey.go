@@ -25,8 +25,35 @@ func (j *Journey) Fare() int {
 		return 320
 	}
 
+	zonesTravelled := j.zonesTravelled()
+	isZone1 := j.isZone1()
+
+	switch zonesTravelled {
+	case 1:
+		if isZone1 {
+			return 250
+		}
+		return 200
+
+	case 2:
+		if isZone1 {
+			return 300
+		}
+		return 225
+
+	default:
+		return 320
+	}
+}
+
+func (j *Journey) Complete(exit *Station) {
+	j.exit = exit
+}
+
+func (j *Journey) zonesTravelled() int {
 	zoneDiff := 2 // max is 3 zones
 
+	// TODO: simplify how we handle stations on edges
 	for _, z1 := range j.entry.zones {
 		for _, z2 := range j.exit.zones {
 			diff := z2 - z1
@@ -39,35 +66,19 @@ func (j *Journey) Fare() int {
 		}
 	}
 
-	isZone1 := false
+	return zoneDiff + 1
+}
 
+func (j *Journey) isZone1() bool {
 	if len(j.entry.zones) == 1 && j.entry.zones[0] == 1 {
-		isZone1 = true
+		return true
 	}
 
 	if len(j.exit.zones) == 1 && j.exit.zones[0] == 1 {
-		isZone1 = true
+		return true
 	}
 
-	if zoneDiff == 0 {
-		if isZone1 {
-			return 250
-		}
-		return 200
-	}
-
-	if zoneDiff == 1 {
-		if isZone1 {
-			return 300
-		}
-		return 225
-	}
-
-	return 320
-}
-
-func (j *Journey) Complete(exit *Station) {
-	j.exit = exit
+	return false
 }
 
 type Transport int

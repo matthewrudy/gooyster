@@ -8,7 +8,7 @@ func main() {
 	card := NewCard()
 	log(card, "Fresh new card")
 
-	card.Credit(3000)
+	card.TopUp(3000)
 	log(card, "Topped up £30")
 
 	card.Enter(Tube, Holborn)

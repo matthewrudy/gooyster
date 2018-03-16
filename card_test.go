@@ -8,16 +8,16 @@ func TestCard_Balance(t *testing.T) {
 	card := NewCard()
 	assertBalance(t, card, 0)
 
-	card.Credit(3000)
+	card.TopUp(3000)
 	assertBalance(t, card, 3000)
 
-	card.Debit(350)
-	assertBalance(t, card, 2650)
+	card.TopUp(350)
+	assertBalance(t, card, 3350)
 }
 
 func TestCard_Enter_and_Exit(t *testing.T) {
 	card := NewCard()
-	card.Credit(3000)
+	card.TopUp(3000)
 	assertBalance(t, card, 3000)
 
 	card.Enter(Tube, Holborn)

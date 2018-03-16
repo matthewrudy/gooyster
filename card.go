@@ -13,12 +13,8 @@ func NewCard() Card {
 	return Card{}
 }
 
-func (c *Card) Credit(amount int) {
+func (c *Card) TopUp(amount int) {
 	c.transactions = append(c.transactions, Transaction{amount})
-}
-
-func (c *Card) Debit(amount int) {
-	c.transactions = append(c.transactions, Transaction{-amount})
 }
 
 func (c *Card) Enter(transport Transport, station *Station) {

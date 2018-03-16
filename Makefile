@@ -1,5 +1,5 @@
 run:
-	go build .
+	go build -o gooyster .
 	./gooyster
 
 test:
